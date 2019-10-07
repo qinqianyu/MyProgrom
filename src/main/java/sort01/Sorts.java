@@ -40,7 +40,6 @@ class Sorts {
         return result;
     }
 
-
     /*
     归并排序2
     */
