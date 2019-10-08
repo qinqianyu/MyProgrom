@@ -7,8 +7,8 @@ public class Test {
     public static void main(String[] args) {
         Random random=new Random();
         int rand=0;//存储随机数
-        int[][] arrays=new int[1000][50];//声明二维数组
-        int[][] arrays1=new int[1000][50];
+        int[][] arrays=new int[1000][500];//声明二维数组
+        int[][] arrays1=new int[1000][500];
         //给数组赋值
         long start0=new Date().getTime();
         for(int i=0;i<arrays.length;i++){
