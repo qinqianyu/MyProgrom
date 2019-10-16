@@ -3,9 +3,12 @@ package neo4j;
 
 import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+import org.neo4j.io.fs.FileUtils;
 
 import java.io.File;
-import java.util.Map;
+import java.io.IOException;
+import java.util.HashMap;
+
 
 public class Enableneo4j {
     private static final File databaseDirectory = new File("D:\\Program Files\\neo4j-community-3.5.11\\data\\databases2\\graph.db");
@@ -23,28 +26,29 @@ public class Enableneo4j {
 
     Node firstnode;
     Node secondnode;
+void insertDb(){
+    Transaction tx = graphDb.beginTx();
+    try {
+        firstnode = graphDb.createNode();
+        firstnode.setProperty("name", "张三");
+        firstnode.addLabel(mylables.person);
 
+        secondnode = graphDb.createNode();
+        secondnode.setProperty("name", "张红");
+        secondnode.addLabel(mylables.person);
+
+        Relationship relationshipTo = firstnode.createRelationshipTo(secondnode, myRelationship.love);
+        relationshipTo.setProperty("dengji", "1");
+        tx.success();
+        System.out.println("数据库已经开启");
+    } catch (Exception e) {
+        tx.failure();
+        System.out.println("数据库开启失败");
+    }
+}
     void carateDb() {
         System.out.println("正在创建数据库");
         graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(databaseDirectory);
-        Transaction tx = graphDb.beginTx();
-        try {
-            firstnode = graphDb.createNode();
-            firstnode.setProperty("name", "张三");
-            firstnode.addLabel(mylables.person);
-
-            secondnode = graphDb.createNode();
-            secondnode.setProperty("name", "张红");
-            secondnode.addLabel(mylables.person);
-
-            Relationship relationshipTo = firstnode.createRelationshipTo(secondnode, myRelationship.love);
-            relationshipTo.setProperty("dengji", "1");
-            tx.success();
-            System.out.println("数据库已经开启");
-        } catch (Exception e) {
-            tx.failure();
-            System.out.println("数据库开启失败");
-        }
     }
 
     void deleteData() {
@@ -68,13 +72,18 @@ public class Enableneo4j {
         Transaction tx = graphDb.beginTx();
         try {
             ResourceIterator<Node> persons = graphDb.findNodes(mylables.person);
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("name","张三");
+            ResourceIterator<Node> nodes = graphDb.findNodes(mylables.person, map);
+
+
             persons.forEachRemaining((entitytyprgraphnode) -> {
-                        System.out.print(entitytyprgraphnode.getProperties("name"));
+                        System.out.print(entitytyprgraphnode.getProperty("name"));
                         System.out.print("->");
                         Iterable<Relationship> relationships = entitytyprgraphnode.getRelationships();
                         relationships.forEach((relationship) -> {
                             Node endNode = relationship.getEndNode();
-                            System.out.print(endNode.getProperties("name"));
+                            System.out.print(endNode.getProperty("name"));
                         });
                         System.out.println();
                     }
@@ -100,7 +109,16 @@ public class Enableneo4j {
 
     public static void main(String[] args) {
         Enableneo4j hello = new Enableneo4j();
+        /*
+        * 删除数据文件
+        * */
+       /* try {
+            FileUtils.deleteRecursively(databaseDirectory);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
         hello.carateDb();
+        hello.insertDb();
         hello.serchNode();
         hello.deleteData();
         hello.shatdown();
