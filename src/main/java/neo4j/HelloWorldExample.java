@@ -1,6 +1,10 @@
 package neo4j;
 
+import mysql.Guanxi;
 import org.neo4j.driver.v1.*;
+
+import java.util.ArrayList;
+
 import static org.neo4j.driver.v1.Values.parameters;
 
 public class HelloWorldExample implements AutoCloseable {
@@ -37,4 +41,6 @@ public class HelloWorldExample implements AutoCloseable {
             greeter.printGreeting("hello, world");
         }
     }
+
+
 }
