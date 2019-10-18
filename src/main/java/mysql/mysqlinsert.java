@@ -8,7 +8,7 @@ public class mysqlinsert {
     private String url = "jdbc:mysql://localhost:3306/neo4j?serverTimezone=UTC&rewriteBatchedStatements=true";
     private String user = "root";
     private String password = "123456";
-    private int liangji=1000;
+    private int liangji=100000;
 
     public static void main(String[] args) {
         new mysqlinsert().Test();

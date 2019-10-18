@@ -9,15 +9,17 @@ import static org.neo4j.driver.v1.Values.parameters;
 
 public class neo4jinsert implements AutoCloseable {
     private final Driver driver;
+    private final Session session;
 
 
     public neo4jinsert(String uri, String user, String password) {
         driver = GraphDatabase.driver(uri, AuthTokens.basic(user, password));
-
+         session = driver.session();
     }
 
     @Override
     public void close() throws Exception {
+        session.close();
         driver.close();
     }
 
@@ -39,7 +41,7 @@ public class neo4jinsert implements AutoCloseable {
                 System.out.println("正在写入neo4j");
                 greeter.insert(getend);
                 System.out.println("已经写入neo4j");
-                start = +100;
+                start +=100;
                 end += 100;
                 System.out.println("正在取出数据"+start+"=="+end);
                 getend = tomysql.getend(conn, start, end);
@@ -54,7 +56,6 @@ public class neo4jinsert implements AutoCloseable {
     }
 
     public void insert(ArrayList<Guanxi> getend) {
-        Session session = driver.session();
         Transaction tx = session.beginTransaction();
             for (Guanxi row : getend) {
                 tx.run("merge (:gongsi{name:$name,gid:$gid})", parameters("name", row.getStartname(), "gid", row.getStart()));
@@ -68,7 +69,6 @@ public class neo4jinsert implements AutoCloseable {
                 tx.run("match (a:person{name:$pname,pid:$pid}),(b:gongsi{name:$gname,gid:$gid}) merge (a)-[:任职]->(b)", parameters("pname", row.getEnd4name(), "pid", row.getEnd4(),"gname",row.getStartname(),"gid",row.getStart()));
             }
             tx.success();
-            session.close();
     }
 }
 
