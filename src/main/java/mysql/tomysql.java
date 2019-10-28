@@ -4,9 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class tomysql {
-    private String url = "jdbc:mysql://localhost:3306/neo4j?serverTimezone=UTC&rewriteBatchedStatements=true";
-    private String user = "root";
-    private String password = "123456";
+    private String url = "jdbc:mysql://192.168.20.134:3306/neo4j?serverTimezone=UTC&rewriteBatchedStatements=true";
+    private String user = "hive";
+    private String password = "bigdata";
 
     public Connection getConn() {
         Connection conn = null;
@@ -23,7 +23,7 @@ public class tomysql {
     }
 
     ArrayList<Guanxi> getend(Connection conn, int a, int b) throws SQLException {
-        ArrayList<Guanxi> guanxis = new ArrayList<Guanxi>();
+        ArrayList<Guanxi> guanxis = new ArrayList<Guanxi>(b-a);
         String sql = "select a.start start,b.name startname,a.end end,c.name endname,a.end2 end2,d.name end2name,a.end3 end3,e.name end3name,a.end4 end4,f.name end4name from (select * from guanxi g where g.id >=" + a + " and g.id<=" + b + ") a left join gongsi b on a.start=b.id left join gongsi c on a.end=c.id left join gongsi d on a.end2=d.id left join people e on a.end3=e.id left join people f on a.end4=f.id";
         PreparedStatement statement = conn.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
         ResultSet resultSet = statement.executeQuery();

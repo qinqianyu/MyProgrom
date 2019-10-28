@@ -8,7 +8,7 @@ public class mysqlinsert {
     private String url = "jdbc:mysql://localhost:3306/neo4j?serverTimezone=UTC&rewriteBatchedStatements=true";
     private String user = "root";
     private String password = "123456";
-    private int liangji=100000;
+    private int liangji=300*10000;
 
     public static void main(String[] args) {
         new mysqlinsert().Test();
@@ -27,7 +27,7 @@ public class mysqlinsert {
             insertpeople(conn, pstm);
             insertguanxi(conn, pstm);
             Long endTime = System.currentTimeMillis();
-            System.out.println("OK,用时：" + (endTime - startTime));
+            System.out.println("OK,用时：" + (endTime - startTime)/1000);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
