@@ -38,23 +38,22 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        String split[] = {"mid_mkt_stkhldr",
-                "500104100002438",
-                "其他投资者",
-                "重庆市九龙坡区八桥乡",
-                "十八治机电公司",
-                "*",
-                "其他类型"};
-        if (split.length < 6 || split[1].length() < 6 || split[4].length() < 6 || split[4].endsWith("*")) {
-            System.out.println("555");
+        String row="\"mid_mkt_menber\",\"500101610393346\",\"易巧玲\",\"510704198610201222\",\"\"";
+        String split[] =  row.replace("\"", "").split(",",-1);
+        System.out.println(split.length);
+        if(split.length < 5 ){
+            System.out.println(1);
         }
-        switch (new Test().Judge(split[5], split[2])) {
-            case 1:
-                System.out.println("1");
-                break;
-            case 2:
-                System.out.println(2);
+        if(split[3].length() < 6  ){
+            System.out.println(2);
         }
+        if(split[1].length() < 6 ){
+            System.out.println(3);
+        }
+        if(split[3].endsWith("*") ){
+            System.out.println(4);
+        }
+
     }
 
     int Judge(String str, String str1) {
