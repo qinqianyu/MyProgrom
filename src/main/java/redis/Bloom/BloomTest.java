@@ -3,6 +3,7 @@ package redis.Bloom;
 
 import io.rebloom.client.Client;
 import org.junit.Test;
+import redis.clients.jedis.Jedis;
 import redis.pool.RedisPoolUtil4J;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class BloomTest {
     @Test
     public void delet() {
         Client client = RedisPoolUtil4J.getClientConnection();
+        Jedis connection = RedisPoolUtil4J.getConnection();
         boolean largebloom = client.delete("largebloom");
         if(largebloom){
             System.out.println("删除 largebloom 成功");
@@ -51,13 +53,18 @@ public class BloomTest {
         if(key){
             System.out.println("删除 key 成功");
         }
-        boolean newFilter = client.delete("newFilter ");
+        boolean newFilter = client.delete("newFilter");
         if(newFilter){
             System.out.println("删除 newFilter 成功");
         }
-        boolean simpleBloom = client.delete("simpleBloom ");
+        boolean simpleBloom = client.delete("simpleBloom");
         if(simpleBloom){
             System.out.println("删除 simpleBloom 成功");
+        }
+
+        Long uniqueID_ = connection.del("UniqueID");
+        if(uniqueID_==1){
+            System.out.println("删除 UniqueID 成功");
         }
     }
 

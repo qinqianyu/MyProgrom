@@ -19,8 +19,9 @@ public class RedisPoolUtil4J {
 
     static {
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMinIdle(5);
-        config.setMaxIdle(20);
+        config.setMaxTotal(5);//连接池总数
+        config.setMinIdle(1);//最少空闲连接数
+        config.setMaxIdle(5);//最大空先连接数
         pool = new JedisPool(config, "192.168.20.138");
     }
 

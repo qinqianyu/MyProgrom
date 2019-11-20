@@ -73,6 +73,16 @@ public class RedisTest {
         System.out.println(student1);
     }
 
+    @Test
+    public  void  testincy(){
+        Jedis jedis = RedisPoolUtil.getPool().getResource();
+        String age = jedis.set("age", "3");
+        System.out.println(age);
+    }
+
+
+
+
     public static void main(String[] args) {
         Student student = new Student(1,"张三","男",15);
         byte[] bytes = writeObject(student);
