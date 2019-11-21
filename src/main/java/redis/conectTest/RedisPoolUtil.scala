@@ -40,7 +40,7 @@ object RedisPoolUtil extends Serializable {
     * @param minIdle       最小空闲连接数
     * @param testOnBorrow  在borrow(引入)一个jedis实例时，是否提前进行validate操作；如果为true，则得到的jedis实例均是可用的；
     * @param testOnReturn   测试连接是否可用
-    * @param maxWaitMillis
+    * @param maxWaitMillis  最大等待时间
     */
   def init(redisHost: String, redisPort: Int, redisTimeout: Int, redisPassword: String, maxTotal: Int, maxIdle: Int, minIdle: Int, testOnBorrow: Boolean, testOnReturn: Boolean, maxWaitMillis: Long): Unit = {
     if (pool == null) {

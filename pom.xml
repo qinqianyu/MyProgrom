@@ -51,7 +51,7 @@
             <version>1.2.24</version>
         </dependency>
 
-        <!--引入redis-->
+        <!--引入redis的java客户端-->
         <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
         <dependency>
             <groupId>redis.clients</groupId>
@@ -59,7 +59,7 @@
             <version>3.1.0</version>
         </dependency>
 
-
+        <!--引入布隆过滤器java客户端依赖于redis.clients.jedis3.0.0-->
         <!-- https://mvnrepository.com/artifact/com.redislabs/jrebloom -->
         <dependency>
             <groupId>com.redislabs</groupId>
@@ -75,8 +75,6 @@
         </dependency>
 
         <!--引入log4j-->
-
-
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
