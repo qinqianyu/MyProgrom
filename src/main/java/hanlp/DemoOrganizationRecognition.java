@@ -14,27 +14,9 @@ import java.util.List;
 public class DemoOrganizationRecognition {
     public static void main(String[] args) {
         String[] testCase = new String[]{
-                "北京心连心园艺中心",
-                "北京心贴心商贸中心",
-                "北京平和心文化中心",
-                "北京中海港商贸中心",
-                "北京中隆中商贸中心",
-                "北京中方祥云商贸中心",
-                "北京科中环科贸中心朝阳分中心",
-                "北京迎泽兴业商贸中心",
-                "北京安顺永和科技中心",
-                "北京平安仓储中心",
-                "北京同江仓储中心",
-                "北京顺德东方商贸中心",
-                "北京安顺无为科贸中心",
-                "北京顺平振兴运输中心",
-                "北京龙山兴业商贸中心",
-                "北京石门东海商贸中心",
-                "北京芙蓉长兴建材中心",
-                "北京南湖兴业经贸中心",
-                "北京海伦美容中心",
+                "北京平安友谊商贸中心",
         };
-        Segment segment = HanLP.newSegment().enableCustomDictionary(false).enableOrganizationRecognize(true);
+        Segment segment = HanLP.newSegment().enableOrganizationRecognize(true);
         for (String sentence : testCase) {
             List<Term> termList = segment.seg(sentence);
             System.out.println(termList);
@@ -51,7 +33,5 @@ public class DemoOrganizationRecognition {
                 }
             }
         }
-
-
     }
 }
