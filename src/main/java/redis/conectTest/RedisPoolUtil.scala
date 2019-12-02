@@ -4,13 +4,13 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig
 import redis.clients.jedis.JedisPool
 
 object RedisPoolUtil extends Serializable {
-  @transient private var pool: JedisPool = null
+  @transient private var pool: JedisPool = _
 
   /**
     * 读取jedis配置信息, 出发jedis初始化
     * 可以写配置类
     */
-  def initJedis: Unit = {
+  def initJedi(): Unit = {
 
     val maxTotal = 50
     val maxIdle = 30
@@ -25,7 +25,7 @@ object RedisPoolUtil extends Serializable {
 
   def makePool(redisHost: String, redisPort: Int, redisTimeout: Int, redisPassword: String, maxTotal: Int, maxIdle: Int, minIdle: Int): Unit
   = {
-    init(redisHost, redisPort, redisTimeout, redisPassword, maxTotal, maxIdle, minIdle, true, false, 10000)
+    init(redisHost, redisPort, redisTimeout, redisPassword, maxTotal, maxIdle, minIdle, testOnBorrow = true, testOnReturn = false, 10000)
   }
 
   /**
@@ -59,16 +59,16 @@ object RedisPoolUtil extends Serializable {
         .setMaxWaitMillis(maxWaitMillis)
       pool = new JedisPool(poolConfig, redisHost, redisPort, redisTimeout, redisPassword)
       val hook = new Thread {
-        override def run = pool.destroy()
+        override def run(): Unit = pool.destroy()
       }
-      sys.addShutdownHook(hook.run)
+      sys.addShutdownHook(hook.run())
     }
   }
 
   def getPool: JedisPool
   = {
     if (pool == null) {
-      initJedis
+      initJedi()
     }
     pool
   }
