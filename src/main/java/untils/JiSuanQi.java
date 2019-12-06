@@ -12,7 +12,7 @@ public class JiSuanQi {
 
     @Test
     public void jisuanqi2() {
-        long s=0;
+        long s=30*10000/(60*60*24);
         for (int i = 0; i < 11; i++) {
             s+=Math.pow(2,i);
         }
@@ -27,7 +27,5 @@ public class JiSuanQi {
         System.out.println(result2);
     }
 
-    private static double log(double value, double base) {
-        return Math.log(value) / Math.log(base);
-    }
+
 }
