@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-public class mapTest {
+public class HashMapTest {
     @Test
     public void test1() {
         HashMap<String, Integer> hashMap = new HashMap<>();

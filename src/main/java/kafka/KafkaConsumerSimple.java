@@ -5,6 +5,7 @@ import org.apache.kafka.common.TopicPartition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Properties;
@@ -34,7 +35,7 @@ public class KafkaConsumerSimple {
         consumer.subscribe(Arrays.asList("flumeTest"));
         try {
             while (true) {
-                ConsumerRecords<String, String> records = consumer.poll(10);
+                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
                 for (ConsumerRecord<String, String> record : records) {
                     logger.info("partition = {}, offset = {}, key = {}, value = {}", record.partition(), record.offset(), record.key(), record.value());
                 }
@@ -66,7 +67,7 @@ public class KafkaConsumerSimple {
         consumer.subscribe(Arrays.asList("test"));
         try {
             while (true) {
-                ConsumerRecords<String, String> records = consumer.poll(10);
+                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
                 for (ConsumerRecord<String, String> record : records) {
                     logger.info("partition = {}, log4j.propertiesoffset = {}, key = {}, value = {}", record.partition(), record.offset(), record.key(), record.value());
                 }
