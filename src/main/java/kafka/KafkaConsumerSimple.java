@@ -10,6 +10,10 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Properties;
 
+/*
+ * 消费前要改本机的hosts
+ *
+ */
 //kafka消费者
 public class KafkaConsumerSimple {
     //  Logger日志
@@ -20,6 +24,12 @@ public class KafkaConsumerSimple {
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "hadoop01:9092,hadoop02:9092,hadoop03:9092");
         properties.put("group.id", "mytest");
+        /**
+         *消费者是否自动提交偏移量，默认是true
+         * 为了经量避免重复数据和数据丢失，可以把它设为true,
+         * 由自己控制核实提交偏移量。
+         * 如果设置为true,可以通过auto.commit.interval.ms属性来设置提交频率
+         */
         properties.put("enable.auto.commit", "true");
         properties.put("auto.commit.interval.ms", "60000");
         properties.put("session.timeout.ms", "30000");
@@ -35,6 +45,13 @@ public class KafkaConsumerSimple {
         consumer.subscribe(Arrays.asList("flumeTest"));
         try {
             while (true) {
+                /**
+                 * 消费者必须持续对Kafka进行轮询，否则会被认为已经死亡，他的分区会被移交给群组里的其他消费者。
+                 * poll返回一个记录列表，每个记录包含了记录所属主题的信息，
+                 * 记录所在分区的信息，记录在分区里的偏移量，以及键值对。
+                 * poll需要一个指定的超时参数，指定了方法在多久后可以返回。
+                 * 发送心跳的频率，告诉群组协调器自己还活着。
+                 */
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
                 for (ConsumerRecord<String, String> record : records) {
                     logger.info("partition = {}, offset = {}, key = {}, value = {}", record.partition(), record.offset(), record.key(), record.value());

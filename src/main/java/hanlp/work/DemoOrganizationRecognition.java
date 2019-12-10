@@ -14,7 +14,7 @@ import java.util.List;
 public class DemoOrganizationRecognition {
     public static void main(String[] args) {
         String[] testCase = new String[]{
-                "中国70年发展",
+                "不管怎样,咸宁日报全媒体特约记者　李星",
         };
         Segment segment = HanLP.newSegment().enableOrganizationRecognize(true);
         for (String sentence : testCase) {
