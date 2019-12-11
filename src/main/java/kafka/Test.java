@@ -4,6 +4,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -54,7 +55,7 @@ public class Test {
              * poll需要一个指定的超时参数，指定了方法在多久后可以返回。
              * 发送心跳的频率，告诉群组协调器自己还活着。
              */
-            ConsumerRecords<String, String> records = kafkaConsumer.poll(2000);
+            ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofMillis(2000));
             for (ConsumerRecord<String, String> record : records) {
                 //Thread.sleep(1000);
                 System.out.println(record.value());
