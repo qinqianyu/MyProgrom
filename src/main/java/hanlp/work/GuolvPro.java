@@ -1,6 +1,10 @@
 package hanlp.work;
 
+import com.hankcs.hanlp.HanLP;
+import com.hankcs.hanlp.seg.common.Term;
+
 import java.io.*;
+import java.util.List;
 
 public class GuolvPro {
 
@@ -50,4 +54,7 @@ public class GuolvPro {
             e.printStackTrace();
         }
     }
+
+
+
 }

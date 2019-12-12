@@ -6,8 +6,8 @@ import org.junit.Test;
 public class JiSuanQi {
     @Test
     public void jisuanqi1() {
-        double l =(double) (3023-2938)/(3123-2938);
-        System.out.println(l*2);
+        double l =(double) (300000/46000)*146/1024/1024;
+        System.out.println(1/l);
     }
 
     @Test
