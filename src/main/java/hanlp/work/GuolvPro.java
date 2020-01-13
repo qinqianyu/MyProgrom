@@ -9,17 +9,17 @@ import java.util.List;
 public class GuolvPro {
 
     private static final String infileName = "C:\\Users\\24109\\AppData\\Roaming\\feiq\\Recv Files\\mkt_invopt.txt";
-    private static final String outfileName = "C:\\Users\\24109\\Desktop\\机构识别\\机构数据\\mkt_invopt2.txt";
-    private static final String outfileName2 = "C:\\Users\\24109\\Desktop\\机构识别\\机构数据\\mkt_invopt3.txt";
-    private static final String outfileName3 = "C:\\Users\\24109\\Desktop\\机构识别\\机构数据\\mkt_invopt4.txt";
+    private static final String outfileName1 = "C:\\Users\\24109\\Desktop\\机构识别\\机构数据\\mkt_invopt1.txt";
+    private static final String outfileName2 = "C:\\Users\\24109\\Desktop\\机构识别\\机构数据\\mkt_invopt2.txt";
+    private static final String outfileName3 = "C:\\Users\\24109\\Desktop\\机构识别\\机构数据\\mkt_invopt3.txt";
 
     public static void main(String[] args) {
         File infile = new File(infileName);
-        File outfile = new File(outfileName);
+        File outfile1 = new File(outfileName1);
         File outfile2 = new File(outfileName2);
         File outfile3 = new File(outfileName3);
         try (BufferedReader reader = new BufferedReader(new FileReader(infile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(outfile));
+             BufferedWriter writer1 = new BufferedWriter(new FileWriter(outfile1));
              BufferedWriter writer2 = new BufferedWriter(new FileWriter(outfile2));
              BufferedWriter writer3 = new BufferedWriter(new FileWriter(outfile3))
         ) {
@@ -39,8 +39,8 @@ public class GuolvPro {
                 }
                 boolean analyse = new MarketPlayerIncrease().analyse(tempString);
                 if (analyse) {
-                    writer.write(tempString);
-                    writer.newLine();
+                    writer1.write(tempString);
+                    writer1.newLine();
                     line2++;
                     continue;
                 }

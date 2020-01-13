@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class guolv {
-    //private static final String infileName = "C:\\Users\\24109\\Desktop\\机构识别\\kafka疑似\\疑似实体.txt";
-    private static final String infileName = "C:\\Users\\24109\\AppData\\Roaming\\feiq\\Recv Files\\mkt_invopt.txt";
+    private static final String infileName = "C:\\Users\\24109\\Desktop\\机构识别\\kafka疑似\\疑似实体.txt";
+    //private static final String infileName = "C:\\Users\\24109\\AppData\\Roaming\\feiq\\Recv Files\\mkt_invopt.txt";
     private static final String outfileName1 = "C:\\Users\\24109\\Desktop\\机构识别\\kafka疑似\\out1.txt";
     private static final String outfileName2 = "C:\\Users\\24109\\Desktop\\机构识别\\kafka疑似\\out2.txt";
     private static final String outfileName3 = "C:\\Users\\24109\\Desktop\\机构识别\\kafka疑似\\out3.txt";
@@ -41,8 +41,11 @@ public class guolv {
         listO.add("医院");
         listO.add("厂");
         listO.add("出版社");
+       /* listO.add("中心");
+        listO.add("（集团）");
+        listO.add("（有限合伙）");
+        listO.add("（普通合伙）");*/
     }
-
 
     public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new FileReader(infileName));

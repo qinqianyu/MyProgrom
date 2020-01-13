@@ -11,17 +11,19 @@ import java.io.IOException;
 import java.util.List;
 
 public class TxtView {
-    private static final String fileName = "C:\\Users\\24109\\Desktop\\机构识别\\kafka疑似\\out5.txt";
+    private static final String fileName = "C:\\Users\\24109\\Desktop\\青岛\\企业名单.txt";
 
     public static void main(String[] args) {
         File file = new File(fileName);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String tempString = null;
-            long line = 0;
-            while ((tempString = reader.readLine()) != null && line < 1000) {
+            long line = 1;
+            while ((tempString = reader.readLine()) != null&&line<10020 ) {
                 //List<Term> list = HanLP.segment(tempString);
-                System.out.println(tempString);
+                if(line>9980)
+                System.out.println(tempString+line);
                 line++;
+               // System.out.println(line);
             }
         } catch (IOException e) {
             e.printStackTrace();

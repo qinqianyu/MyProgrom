@@ -15,7 +15,7 @@ public class Ping {
 
 
     public static boolean ping(String ipAddress) throws Exception {
-        int timeOut = 3000;  //超时应该在3钞以上
+        int timeOut = 2000;  //超时应该在3钞以上
         boolean status = InetAddress.getByName(ipAddress).isReachable(timeOut);     // 当返回值是true时，说明host是可用的，false则不可。
         return status;
     }
@@ -73,12 +73,19 @@ public class Ping {
         return 0;
     }
 
-    public static void main(String[] args) throws Exception {
-        String ipAddress = "192.168.20.138";
-        System.out.println(ping(ipAddress));
-        System.out.println("-------------");
-        ping02(ipAddress);
-        System.out.println("-------------");
-        System.out.println(ping03(ipAddress, 10, 5000));
+    public static void main(String[] args) throws InterruptedException {
+        String ipAddress = "192.168.20.146";
+        while (true) {
+            try {
+               ping(ipAddress);
+            } catch (Exception e) {
+                System.out.println(System.currentTimeMillis()+"--"+e.getMessage());
+            }
+            Thread.sleep(2000);
+        }
+
+
+        // ping02(ipAddress);
+        //  System.out.println(ping03(ipAddress, 10, 5000));
     }
 }
