@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class mysqlinsert {
     private String url = "jdbc:database.mysql://localhost:3306/database.neo4j?serverTimezone=UTC&rewriteBatchedStatements=true";
+
     private String user = "root";
     private String password = "123456";
     private int liangji=300*10000;

@@ -19,10 +19,11 @@ public class RedisPoolUtil4J {
 
     static {
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxTotal(5);//连接池总数
-        config.setMinIdle(1);//最少空闲连接数
+        config.setMaxTotal(10);//连接池总数
+        config.setMinIdle(3);//最少空闲连接数
         config.setMaxIdle(5);//最大空先连接数
-        pool = new JedisPool(config, "192.168.20.138");
+        pool=new JedisPool(config,"192.168.20.138");
+       // pool = new JedisPool(config, "192.168.20.146",6379,2000,"alHQNItfIh9OkBdZ@#8redis");
     }
 
     public static Jedis getConnection() {
