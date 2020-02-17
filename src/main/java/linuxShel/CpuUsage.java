@@ -1,12 +1,10 @@
-package linux;
+package linuxShel;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
+import linux.CpuInfo;
+import linux.ResourceUsage;
 import org.apache.log4j.Logger;
+
+import java.io.*;
 
 /**
  * 采集CPU使用率
