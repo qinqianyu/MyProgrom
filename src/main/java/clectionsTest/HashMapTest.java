@@ -1,4 +1,4 @@
-package ClectionsTest;
+package clectionsTest;
 
 import org.junit.Test;
 

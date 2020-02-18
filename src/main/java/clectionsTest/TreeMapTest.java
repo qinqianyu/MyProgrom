@@ -1,9 +1,8 @@
-package ClectionsTest;
+package clectionsTest;
 
 import org.apache.lucene.util.RamUsageEstimator;
 import org.junit.Test;
 
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.TreeMap;
 

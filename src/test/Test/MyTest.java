@@ -2,6 +2,7 @@ package Test;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.util.*;
 
 public class MyTest {
@@ -25,5 +26,55 @@ public class MyTest {
         LinkedHashMap<Object, Object> objectObjectLinkedHashMap = new LinkedHashMap<>();
     }
 
+    @Test
+    public void test3() {
 
+
+        File file = new File("C:/Users/24109/Desktop/同步/root/cqgs");
+
+        if (file.exists()) {
+            System.out.println("文件已经存在");
+        } else {
+            // return;
+            boolean mkdir = file.mkdirs();
+            System.out.println(mkdir);
+        }
+
+        if (file.isDirectory()) {
+            System.out.println("是文件夹");
+        }
+        if (file.isFile()) {
+            System.out.println("是文件");
+        }
+
+    }
+
+    @Test
+    public void test4() {
+        List<String> columns=new ArrayList<>() ;
+        columns.add("a");
+        columns.add("b");
+        columns.add("c");
+        columns.add("d");
+        String sqlstart = "select '";
+        String sqlsmid1 = "' AS COLUMNS,";
+        String sqlsmid2 = "";
+        String sqlsend = " FROM " + "space" + "." + "tableName";
+        boolean firstFlag = true;
+        System.out.println("---------------------");
+        System.out.println(columns.size());
+        System.out.println("---------------------");
+        for (String column : columns) {
+            if (firstFlag) {
+                sqlstart = sqlstart + column;
+                sqlsmid2 = sqlsmid2 + column;
+                firstFlag=false;
+            } else {
+                sqlstart = sqlstart + "|" + column;
+                sqlsmid2 = sqlsmid2 + "," + column;
+            }
+        }
+        String sql = sqlstart + sqlsmid1 + sqlsmid2 + sqlsend;
+        System.out.println(sql);
+    }
 }
