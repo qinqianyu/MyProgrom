@@ -1,33 +1,94 @@
 package linuxShel;
 
-import linux.CpuInfo;
 import linux.ResourceUsage;
 import org.apache.log4j.Logger;
 
 import java.io.*;
+import java.util.List;
 
 /**
  * 采集CPU使用率
  */
-public class CpuUsage extends ResourceUsage {
+public class CpuUsage extends Thread{
 
     private static Logger log = Logger.getLogger(CpuUsage.class);
     private static CpuUsage INSTANCE = new CpuUsage();
+    private static boolean flag = true;
+    private static int tmFflag = 60;
 
-    private CpuUsage() {
+
+
+    private String host;
+    private String user;
+    private String passwd;
+
+    public CpuUsage() {
     }
 
     public static CpuUsage getInstance() {
         return INSTANCE;
     }
 
+
+    public void startgather(String user, String passwd, String host) {
+        JSchExecutor executor = new JSchExecutor(user, passwd, host);
+        try {
+            executor.connect();
+            CpuInfo beforCpuInfo = null;
+            while (tmFflag > 0) {
+                List<String> strings = executor.execCmd("echo $[$(date +%s%N)/1000000];cat /proc/stat");
+                CpuInfo cpuInfo = parseCpuTime(strings);
+                if (beforCpuInfo != null) {
+                    float cpuUsage = 100 * (1 - (float) (cpuInfo.getIdleCpuTime() - beforCpuInfo.getIdleCpuTime()) / (float) (cpuInfo.getTotalCpuTime() - beforCpuInfo.getTotalCpuTime()));
+                    System.out.println("cpu使用率为" + cpuUsage + "%");
+                }
+                beforCpuInfo = cpuInfo;
+                Thread.sleep(1000);
+                tmFflag -= 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            executor.disconnect();
+        }
+    }
+
+    public void stopgather() {
+        flag = false;
+    }
+
+    private CpuInfo parseCpuTime(List<String> strings) {
+        CpuInfo cpuInfo = CpuInfo.builder().build();
+        for (String line : strings) {
+            if (line.startsWith("date")) {
+                line = line.trim();
+                cpuInfo.setGatherTime(Long.parseLong(line.split(" ")[1]));
+                continue;
+            }
+            if (line.startsWith("cpu")) {
+                line = line.trim();
+                String[] temp = line.split("\\s+");
+                cpuInfo.setIdleCpuTime(Long.parseLong(temp[4]));
+                long totalCpuTime = 0;
+                for (String s : temp) {
+                    if (!s.equals("cpu")) {
+                        totalCpuTime += Long.parseLong(s);
+                    }
+                }
+                cpuInfo.setTotalCpuTime(totalCpuTime);
+                break;
+            }
+        }
+        return cpuInfo;
+    }
+
+
     /**
      * Purpose:采集CPU使用率
      *
-     * @param args
      * @return float, CPU使用率, 小于1
      */
-    @Override
+
     public float get() {
         log.info("开始收集cpu使用率");
         float cpuUsage = 0;
@@ -82,17 +143,19 @@ public class CpuUsage extends ResourceUsage {
         }
         in2.close();
         pro.destroy();
-        return new CpuInfo(idleCpuTime2, totalCpuTime2);
+        return linuxShel.CpuInfo.builder().idleCpuTime(idleCpuTime2).build();
     }
 
     /**
      * @param args
      * @throws InterruptedException
      */
-    public static void main(String[] args) throws InterruptedException {
-        while (true) {
-            System.out.println(CpuUsage.getInstance().get());
-            Thread.sleep(5000);
-        }
+    public static void main(String[] args) {
+        CpuUsage.getInstance().startgather("root", "123456", "192.168.20.139");
+    }
+
+    @Override
+    public void run() {
+
     }
 }

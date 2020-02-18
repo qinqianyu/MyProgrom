@@ -30,16 +30,10 @@ public class Tesy {
                 e.printStackTrace(new PrintWriter(sw));
             }
              stsrt = System.currentTimeMillis();
-            System.out.println("开始"+stsrt);
-            root139.connect();
-            System.out.println("连上了"+System.currentTimeMillis());
             //List<String> strings = root139.execCmd("cat /proc/stat");
              strings = root139.execCmd("echo $[$(date +%s%N)/1000000];cat /proc/stat");
             System.out.println("结束时间"+System.currentTimeMillis());
             strings.forEach((x)-> System.out.print(x+"\n"));
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

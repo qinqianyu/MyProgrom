@@ -91,9 +91,7 @@ public class JSchExecutor {
         ((ChannelExec) channel).setErrStream(System.err);
         InputStream in = channel.getInputStream();
         reader = new BufferedReader(new InputStreamReader(in));//中文乱码貌似这里不能控制，看连接的服务器的
-
         channel.connect();
-        System.out.println("The remote command is: " + command);
         String buf ;
         ArrayList<String> result = new ArrayList<>();
         while ((buf = reader.readLine()) != null) {

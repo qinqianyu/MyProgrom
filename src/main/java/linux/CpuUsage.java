@@ -26,7 +26,7 @@ public class CpuUsage extends ResourceUsage {
     /**
      * Purpose:采集CPU使用率
      *
-     * @param args
+     * @param
      * @return float, CPU使用率, 小于1
      */
     @Override
@@ -84,7 +84,7 @@ public class CpuUsage extends ResourceUsage {
         }
         in2.close();
         pro.destroy();
-        return new CpuInfo(idleCpuTime2, totalCpuTime2);
+        return new CpuInfo(idleCpuTime2, totalCpuTime2,endTime);
     }
 
     /**

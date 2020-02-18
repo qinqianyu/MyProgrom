@@ -6,9 +6,17 @@ import lombok.Data;
 public class CpuInfo {
     private Long idleCpuTime;
     private Long totalCpuTime;
+    private Long gatherTime;
 
-    public CpuInfo(Long idleCpuTime, Long totalCpuTime) {
+    /**
+     *
+     * @param idleCpuTime   空闲时间
+     * @param totalCpuTime  总时间
+     * @param gatherTime    采集时间(时间戳)
+     */
+    public CpuInfo(Long idleCpuTime, Long totalCpuTime, Long gatherTime) {
         this.idleCpuTime = idleCpuTime;
         this.totalCpuTime = totalCpuTime;
+        this.gatherTime = gatherTime;
     }
 }

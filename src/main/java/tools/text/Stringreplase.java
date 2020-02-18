@@ -28,8 +28,8 @@ public class Stringreplase {
 
     @Test
     public void tolow() {
-        String o = "OLUMNS";
-        System.out.println(o.toLowerCase());
+        String o = "flag";
+        System.out.println(o.toUpperCase());
 
     }
 
