@@ -1,6 +1,7 @@
 package linuxShel.servies;
 
 import com.jcraft.jsch.*;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * https://www.jianshu.com/p/ede91b0b8495
  */
+@Data
 public class JSchExecutor {
     private static Logger log = LoggerFactory.getLogger(JSchExecutor.class);
 
