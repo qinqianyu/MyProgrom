@@ -1,4 +1,4 @@
-package linuxShel;
+package linuxShel.servies;
 
 import com.jcraft.jsch.JSchException;
 import lombok.Data;
@@ -20,6 +20,8 @@ public class Machine {
     private JSchExecutor executor;
 
     private CpuLoad cpuLoad;
+    private MemUsage memUsage;
+    private ResourceUsage resourceUsage;
 
     private static Map<String, Machine> machineList = new HashMap<>();
 
@@ -43,19 +45,25 @@ public class Machine {
 
 
     public void startDynamicMonitor() {
-        this.dynamicFlag = true;
         try {
             executor.connect();
             cpuLoad = new CpuLoad(executor);
+            memUsage = new MemUsage(executor);
+            resourceUsage = new ResourceUsage(executor);
             cpuLoad.start();
+            memUsage.start();
+            resourceUsage.start();
+            this.dynamicFlag = true;
         } catch (JSchException e) {
             e.printStackTrace();
         }
     }
 
     public void stopDynamicMonitor() {
-        this.dynamicFlag = false;
         cpuLoad.setFlag(false);
+        memUsage.setFlag(false);
+        resourceUsage.setFlag(false);
+        this.dynamicFlag = false;
     }
 
     private Machine(String user, String passwd, String host) {

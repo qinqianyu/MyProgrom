@@ -1,5 +1,7 @@
-package linuxShel;
+package linuxShel.test;
 
+
+import linuxShel.servies.Machine;
 import org.junit.Test;
 
 import java.util.Set;
@@ -31,8 +33,10 @@ public class MyTest {
         }
         parseFlag(machine.getDynamicFlag());
 
-        Thread.sleep(60000);
+        Thread.sleep(10000);
         machine.stopDynamicMonitor();
+        System.out.println("等待状态");
+        Thread.sleep(5000);
         parseFlag(machine.getDynamicFlag());
 
     }
@@ -44,5 +48,6 @@ public class MyTest {
             System.out.println("动态指标状态是：关闭");
         }
     }
+
 
 }

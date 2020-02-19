@@ -1,6 +1,7 @@
-package linuxShel;
+package linuxShel.others;
 
-import linux.ResourceUsage;
+import linuxShel.dos.CpuInfo;
+import linuxShel.servies.JSchExecutor;
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -36,7 +37,7 @@ public class CpuUsage extends Thread{
             executor.connect();
             CpuInfo beforCpuInfo = null;
             while (tmFflag > 0) {
-                List<String> strings = executor.execCmd("echo $[$(date +%s%N)/1000000];cat /proc/stat");
+                List<String> strings = executor.execCmd("echo 'date '$[$(date +%s%N)/1000000];cat /proc/stat");
                 CpuInfo cpuInfo = parseCpuTime(strings);
                 if (beforCpuInfo != null) {
                     float cpuUsage = 100 * (1 - (float) (cpuInfo.getIdleCpuTime() - beforCpuInfo.getIdleCpuTime()) / (float) (cpuInfo.getTotalCpuTime() - beforCpuInfo.getTotalCpuTime()));
@@ -143,7 +144,7 @@ public class CpuUsage extends Thread{
         }
         in2.close();
         pro.destroy();
-        return linuxShel.CpuInfo.builder().idleCpuTime(idleCpuTime2).build();
+        return CpuInfo.builder().idleCpuTime(idleCpuTime2).build();
     }
 
     /**

@@ -1,11 +1,10 @@
-package linuxShel;
+package linuxShel.others;
 
-import com.jcraft.jsch.JSchException;
+import linuxShel.servies.JSchExecutor;
 import org.junit.Test;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Arrays;
 import java.util.List;
 
 

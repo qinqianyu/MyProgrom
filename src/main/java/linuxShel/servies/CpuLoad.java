@@ -1,7 +1,9 @@
-package linuxShel;
+package linuxShel.servies;
 
-import lombok.Data;
+import linuxShel.dos.CpuInfo;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 
 
@@ -17,17 +19,26 @@ public class CpuLoad extends Thread {
     @Override
     public void run() {
         CpuInfo beforCpuInfo = null;
+        CpuInfo cpuInfo = null;
         while (FLAG) {
             List<String> strings = null;
             try {
-                strings = executor.execCmd("echo $[$(date +%s%N)/1000000];cat /proc/stat");
+                strings = executor.execCmd("echo 'date '$[$(date +%s%N)/1000000];cat /proc/stat | grep cpu");
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            CpuInfo cpuInfo = parseCpuTime(strings);
+            if (strings != null) {
+                cpuInfo = parseCpuTime(strings);
+            } else {
+                System.out.println("cpu使用率：获取不到");
+                return;
+            }
             if (beforCpuInfo != null) {
-                float cpuUsage = 100 * (1 - (float) (cpuInfo.getIdleCpuTime() - beforCpuInfo.getIdleCpuTime()) / (float) (cpuInfo.getTotalCpuTime() - beforCpuInfo.getTotalCpuTime()));
-                System.out.println("cpu使用率为" + cpuUsage + "%");
+                double cpuUsage = 100 * (1 - (float) (cpuInfo.getIdleCpuTime() - beforCpuInfo.getIdleCpuTime()) / (float) (cpuInfo.getTotalCpuTime() - beforCpuInfo.getTotalCpuTime()));
+                DecimalFormat df = new DecimalFormat("#.00");
+                BigDecimal bg = new BigDecimal(cpuUsage);
+                cpuUsage = bg.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+                System.out.println("cpu使用率为" + String.format("%.2f", cpuUsage) + "%");
             }
             beforCpuInfo = cpuInfo;
             try {

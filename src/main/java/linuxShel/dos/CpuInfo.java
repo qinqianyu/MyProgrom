@@ -1,4 +1,4 @@
-package linuxShel;
+package linuxShel.dos;
 
 import lombok.Builder;
 import lombok.Data;
