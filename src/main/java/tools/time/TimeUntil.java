@@ -14,6 +14,8 @@ public class TimeUntil {
         if(time<10000000000L)
             time*=1000;
         String format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date(time));
+        String format1 = new SimpleDateFormat("HH:mm:ss").format(new Date(Long.parseLong("1574857753")));
         System.out.println(format);
+        System.out.println(format1);
     }
 }
