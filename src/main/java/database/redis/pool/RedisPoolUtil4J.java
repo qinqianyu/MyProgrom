@@ -1,5 +1,7 @@
 package database.redis.pool;
 
+//import io.rebloom.client.Client;
+import com.redislabs.modules.rejson.JReJSON;
 import io.rebloom.client.Client;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -7,11 +9,7 @@ import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- * User: leisurexi
- * Date: 2019-10-08
- * Time: 9:02 下午
+ * 用来连接redis的连接池
  */
 public class RedisPoolUtil4J {
 
@@ -19,9 +17,9 @@ public class RedisPoolUtil4J {
 
     static {
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxTotal(10);//连接池总数
+        config.setMaxTotal(20);//连接池总数
         config.setMinIdle(3);//最少空闲连接数
-        config.setMaxIdle(5);//最大空先连接数
+        config.setMaxIdle(5);//最大空闲连接数
         pool=new JedisPool(config,"192.168.20.138");
        // pool = new JedisPool(config, "192.168.20.146",6379,2000,"alHQNItfIh9OkBdZ@#8redis");
     }
@@ -30,8 +28,11 @@ public class RedisPoolUtil4J {
         return pool.getResource();
     }
 
-    public static Client getClientConnection() {
+    public static Client getBloomClient() {
         return new Client(pool);
+    }
+    public static JReJSON getJsonClient() {
+        return  new JReJSON(pool);
     }
 
     public static void execute(CallWithJedis caller) {
@@ -44,12 +45,5 @@ public class RedisPoolUtil4J {
             jedis.close();
         }
     }
-
-}
-
-@FunctionalInterface
-interface CallWithJedis {
-
-    void call(Jedis jedis);
 
 }

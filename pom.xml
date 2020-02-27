@@ -66,6 +66,12 @@
             <artifactId>jrebloom</artifactId>
             <version>1.2.0</version>
         </dependency>
+        <!--引入Json java客户端依赖于redis.clients.jedis3.0.0-->
+        <dependency>
+            <groupId>com.redislabs</groupId>
+            <artifactId>jrejson</artifactId>
+            <version>1.2.0</version>
+        </dependency>
 
         <!--引入lombok-->
         <dependency>
@@ -73,6 +79,7 @@
             <artifactId>lombok</artifactId>
             <version>1.16.22</version>
         </dependency>
+
 
         <!--引入log4j-->
         <dependency>
@@ -91,7 +98,11 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>1.7.2</version>
+        </dependency>
         <!--引入hanlp汉语言处理-->
         <!--  <dependency>
               <groupId>com.hankcs</groupId>

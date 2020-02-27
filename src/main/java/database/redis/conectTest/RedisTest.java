@@ -3,8 +3,10 @@ package database.redis.conectTest;
 import com.alibaba.fastjson.JSONArray;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.params.SetParams;
 
 import java.io.*;
+import java.util.Random;
 
 public class RedisTest {
     public static Jedis getJedis(){
@@ -93,4 +95,38 @@ public class RedisTest {
         Student ob1 = (Student) ob;
         System.out.println(ob1.getSname());
     }
+    @Test
+    public  void  testsetnx(){
+        Jedis jedis = RedisPoolUtil.getPool().getResource();
+        Long setnx = jedis.setnx("mykey", "true");
+        if(setnx>0){
+            System.out.println("拿到了锁");
+        }else {
+            System.out.println("未拿到锁");
+        }
+        jedis.del("mykey");
+        jedis.close();
+    }
+
+    @Test
+    public  void  testsetex(){
+        Jedis jedis = RedisPoolUtil.getPool().getResource();
+        SetParams nx = SetParams.setParams().ex(5).nx();
+        String randomNum = String.valueOf(new Random().nextInt(1000));
+        String result = jedis.set("mykey", randomNum, nx);
+        if(result!=null){
+            System.out.println(result);
+            System.out.println("拿到了锁");
+        }else {
+            System.out.println("未拿到锁");
+        }
+        if (jedis.get("mykey").equals(randomNum)){
+            System.out.println("结束任务");
+        }else {
+            System.out.println("任务超时");
+        }
+        jedis.del("mykey");
+        jedis.close();
+    }
+
 }

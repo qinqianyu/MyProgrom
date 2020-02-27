@@ -1,6 +1,7 @@
 package tools.text;
 
 import org.junit.Test;
+import org.w3c.dom.html.HTMLParagraphElement;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -75,8 +76,10 @@ public class Stringreplase {
 
     @Test
     public void ip2() {
-
-        System.out.println(32782800/1024/1024);
+        String a="南京秦淮区$大经路";
+        String[] split = a.split("\\$");
+        System.out.println(split.length);
+        Arrays.stream(split).forEach((x)-> System.out.println(x+"\t"));
 
        // System.out.println(getLocalIPList());
     }

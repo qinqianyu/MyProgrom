@@ -27,7 +27,7 @@ public class BloomTest {
      */
     @Test
     public void test1() {
-        Client client = RedisPoolUtil4J.getClientConnection();
+        Client client = RedisPoolUtil4J.getBloomClient();
         client.delete(KEY);
         for (int i = 0; i < 100000; i++) {
             client.add(KEY, "user" + i);
@@ -43,7 +43,7 @@ public class BloomTest {
      */
     @Test
     public void delet() {
-        Client client = RedisPoolUtil4J.getClientConnection();
+        Client client = RedisPoolUtil4J.getBloomClient();
         Jedis connection = RedisPoolUtil4J.getConnection();
         boolean largebloom = client.delete("largebloom");
         if(largebloom){
@@ -73,7 +73,7 @@ public class BloomTest {
      */
     @Test
     public void test2() {
-        Client client = RedisPoolUtil4J.getClientConnection();
+        Client client = RedisPoolUtil4J.getBloomClient();
         client.delete(KEY);
         for (int i = 0; i < 100000; i++) {
             client.add(KEY, "user" + i);
@@ -124,7 +124,7 @@ public class BloomTest {
         List<String> users = randomUsers(100000);
         List<String> usersTrain = users.subList(0, users.size() / 2);
         List<String> userTest = users.subList(users.size() / 2, users.size());
-        Client client = RedisPoolUtil4J.getClientConnection();
+        Client client = RedisPoolUtil4J.getBloomClient();
         client.delete(KEY);
         usersTrain.forEach(s -> client.add(KEY, s));
         int falses = 0;
@@ -151,7 +151,7 @@ public class BloomTest {
         List<String> users = randomUsers(allsize);
         List<String> usersTrain = users.subList(0, users.size() / 2);
         List<String> userTest = users.subList(users.size() / 2, users.size());
-        Client client = RedisPoolUtil4J.getClientConnection();
+        Client client = RedisPoolUtil4J.getBloomClient();
         client.delete(KEY);
         //对应bf.reserve指令
         client.createFilter(KEY, users.size() / 2, 0.001);

@@ -2,6 +2,8 @@ package tools.math;
 
 import org.junit.Test;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 
 public class JiSuanQi {
     @Test
@@ -26,6 +28,12 @@ public class JiSuanQi {
         System.out.println(result);
         System.out.println(result2);
     }
+    @Test
+    public void jisuanqi4() {
+        long nextLong = ThreadLocalRandom.current().nextLong(2L << 32);
+        System.out.println(nextLong);
+        System.out.println(2L << 32);
+        System.out.println(Long.MAX_VALUE);
 
-
+    }
 }
