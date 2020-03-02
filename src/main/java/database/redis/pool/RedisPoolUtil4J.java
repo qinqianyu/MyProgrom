@@ -21,7 +21,7 @@ public class RedisPoolUtil4J {
         config.setMinIdle(3);//最少空闲连接数
         config.setMaxIdle(5);//最大空闲连接数
         pool=new JedisPool(config,"192.168.20.138");
-       // pool = new JedisPool(config, "192.168.20.146",6379,2000,"alHQNItfIh9OkBdZ@#8redis");
+        //pool = new JedisPool(config, "192.168.20.146",6379,2000,"alHQNItfIh9OkBdZ@#8redis");
     }
 
     public static Jedis getConnection() {
@@ -34,7 +34,9 @@ public class RedisPoolUtil4J {
     public static JReJSON getJsonClient() {
         return  new JReJSON(pool);
     }
-
+    public static JReCell getCellClient() {
+        return  new JReCell(pool);
+    }
     public static void execute(CallWithJedis caller) {
         Jedis jedis = pool.getResource();
         try {

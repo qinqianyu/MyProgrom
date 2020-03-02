@@ -29,8 +29,8 @@ public class Stringreplase {
 
     @Test
     public void tolow() {
-        String o = "flag";
-        System.out.println(o.toUpperCase());
+        String o = "JSON.ARRAPPEND";
+        System.out.println(o.toLowerCase());
 
     }
 

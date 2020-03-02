@@ -7,6 +7,6 @@ import java.util.Date;
 @Builder
 @Data
 public class CpuCut {
-    String time;
-    Integer value;
+    String time[];
+    Integer value[];
 }
