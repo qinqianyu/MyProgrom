@@ -1,11 +1,10 @@
 package database.redis.Bloom;
 
+import database.redis.pool.RedisPoolUtil4J;
 
 import io.rebloom.client.Client;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
-import database.redis.pool.RedisPoolUtil4J;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -38,6 +37,7 @@ public class BloomTest {
             }
         }
     }
+
     /**
      * 布隆过滤器删除
      */
@@ -46,24 +46,24 @@ public class BloomTest {
         Client client = RedisPoolUtil4J.getBloomClient();
         Jedis connection = RedisPoolUtil4J.getConnection();
         boolean largebloom = client.delete("largebloom");
-        if(largebloom){
+        if (largebloom) {
             System.out.println("删除 largebloom 成功");
         }
         boolean key = client.delete(KEY);
-        if(key){
+        if (key) {
             System.out.println("删除 key 成功");
         }
         boolean newFilter = client.delete("newFilter");
-        if(newFilter){
+        if (newFilter) {
             System.out.println("删除 newFilter 成功");
         }
         boolean simpleBloom = client.delete("simpleBloom");
-        if(simpleBloom){
+        if (simpleBloom) {
             System.out.println("删除 simpleBloom 成功");
         }
 
         Long uniqueID_ = connection.del("UniqueID");
-        if(uniqueID_==1){
+        if (uniqueID_ == 1) {
             System.out.println("删除 UniqueID 成功");
         }
     }
@@ -147,7 +147,7 @@ public class BloomTest {
      */
     @Test
     public void test4() {
-        int allsize=100000;
+        int allsize = 100000;
         List<String> users = randomUsers(allsize);
         List<String> usersTrain = users.subList(0, users.size() / 2);
         List<String> userTest = users.subList(users.size() / 2, users.size());
@@ -163,8 +163,8 @@ public class BloomTest {
                 falses++;
             }
         }
-        double v = (double) falses / userTest.size()*100;
+        double v = (double) falses / userTest.size() * 100;
         System.out.printf("%d %d\n", falses, userTest.size());
-        System.out.println("百分比:"+v);
+        System.out.println("百分比:" + v);
     }
 }

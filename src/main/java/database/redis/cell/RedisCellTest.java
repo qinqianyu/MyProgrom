@@ -1,6 +1,5 @@
 package database.redis.cell;
 
-import database.redis.conectTest.RedisPoolUtil;
 import database.redis.pool.JReCell;
 import database.redis.pool.RedisPoolUtil4J;
 import org.junit.Test;
@@ -9,10 +8,13 @@ import redis.clients.jedis.Jedis;
 import java.util.List;
 
 public class RedisCellTest {
+    /**
+     * 原生方法
+     */
     @Test
     public void testCell() {
         for (int i = 0; i < 10; i++) {
-            try (Jedis jedis = RedisPoolUtil.getPool().getResource()) {
+            try (Jedis jedis = RedisPoolUtil4J.getConnection()) {
                 jedis.getClient().sendCommand("cl.throttle"::getBytes, "cellkey".getBytes(), "2".getBytes(), "1".getBytes(), "5".getBytes());
                 List<Long> result = jedis.getClient().getIntegerMultiBulkReply();
                 Long integer = result.get(0);
@@ -28,6 +30,9 @@ public class RedisCellTest {
         }
     }
 
+    /**
+     * 封装方法
+     */
     @Test
     public void testCell2() throws InterruptedException {
         JReCell cellClient = RedisPoolUtil4J.getCellClient();

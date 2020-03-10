@@ -1,6 +1,7 @@
 package database.redis.Bloom;
 
 import database.redis.pool.RedisPoolUtil4J;
+import io.rebloom.client.Client;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
@@ -17,15 +18,9 @@ public class Insert {
     private static final String key = "redis:bloom:filter";
 
     private static final int[] seeds = new int[]{5, 7, 11, 13, 31, 37, 61};
-    private static SimpleHash[] func = new SimpleHash[seeds.length];
 
     private final String fileName = "C:\\Users\\24109\\Desktop\\青岛\\out_1.txt";
 
-    static {
-        for (int i = 0; i < seeds.length; i++) {
-            func[i] = new SimpleHash(DEFAULT_SIZE, seeds[i]);
-        }
-    }
 
     public void initMkt() {
         log.info("初始化redis主体哈希信息");
@@ -47,7 +42,7 @@ public class Insert {
                 add(tempString);
                 line++;
                 if (line % 10000 == 0) {
-                    System.out.println(line +"--" +System.currentTimeMillis()+" -- 创建bitmap:--->" + tempString);
+                    System.out.println(line + "--" + System.currentTimeMillis() + " -- 创建bitmap:--->" + tempString);
                 }
             }
             reader.close();
@@ -73,33 +68,32 @@ public class Insert {
 
     @Test
     public void Trstpool() {
-        Long start=System.currentTimeMillis();
+        Long start = System.currentTimeMillis();
         for (int i = 0; i < 10000; i++) {
             Jedis connection = RedisPoolUtil4J.getConnection();
             final Boolean getbit = connection.getbit(key, 55);
             connection.close();
         }
-        System.out.println(10000/(System.currentTimeMillis()-start));
+        System.out.println(10000 / (System.currentTimeMillis() - start));
     }
 
     @Test
     public void Chushihua() {
-       initMkt();
+        initMkt();
     }
 
     public void add(String value) throws InterruptedException {
-        for (SimpleHash f : func) {
-            insert((long) f.hash(value),5);
-        }
+        insert(value, 5);
     }
 
-    private static void insert( Long offset, int times) throws RuntimeException, InterruptedException {
+    private static void insert(String value, int times) throws RuntimeException, InterruptedException {
         for (int i = 0; i < times; i++) {
-            try(Jedis connection = RedisPoolUtil4J.getConnection()) {
-                connection.setbit(key, offset, true);
+            try {
+                Client bloomClient = RedisPoolUtil4J.getBloomClient();
+                bloomClient.add(key, value);
                 return;
             } catch (Exception e) {
-                System.out.println("失败第"+(i+1)+"次"+System.currentTimeMillis()+"--"+e.getMessage());
+                System.out.println("失败第" + (i + 1) + "次" + System.currentTimeMillis() + "--" + e.getMessage());
                 Thread.sleep(60000);
             }
         }
@@ -110,35 +104,7 @@ public class Insert {
         if (value == null) {
             return false;
         }
-        boolean ret = true;
-        Jedis connection = RedisPoolUtil4J.getConnection();
-        for (SimpleHash f : func) {
-            ret = connection.getbit(key, f.hash(value));
-            if (!ret) {
-                connection.close();
-                return ret;
-            }
-        }
-        connection.close();
-        return ret;
-    }
-
-    public static class SimpleHash {
-        private int cap;
-        private int seed;
-
-        public SimpleHash(int cap, int seed) {
-            this.cap = cap;
-            this.seed = seed;
-        }
-
-        public int hash(String value) {
-            int result = 0;
-            int len = value.length();
-            for (int i = 0; i < len; i++) {
-                result = seed * result + value.charAt(i);
-            }
-            return (cap - 1) & result;
-        }
+        Client bloomClient = RedisPoolUtil4J.getBloomClient();
+        return bloomClient.exists(key, value);
     }
 }

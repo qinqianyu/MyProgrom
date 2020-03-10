@@ -6,12 +6,9 @@ import redis.clients.jedis.commands.ProtocolCommand;
 import redis.clients.jedis.exceptions.JedisDataException;
 import redis.clients.jedis.exceptions.JedisException;
 import redis.clients.jedis.util.Pool;
-import redis.clients.jedis.util.SafeEncoder;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-
-import static database.redis.pool.RedisPoolUtil4J.getConnection;
 
 public class JReCell {
     private enum Command implements ProtocolCommand {
@@ -19,7 +16,7 @@ public class JReCell {
         private final byte[] raw;
 
         Command(String alt) {
-            raw = SafeEncoder.encode(alt);
+            raw = encode(alt);
         }
 
         public byte[] getRaw() {
@@ -35,12 +32,12 @@ public class JReCell {
 
     public List<Long> throttle(String key, Integer max_burst, Integer count_per_period, Integer period) {
         List<Long> result;
-        try (Jedis conn = getConnection()) {
+        try (Jedis conn = client.getResource()) {
             conn.getClient()
                     .sendCommand(Command.throttle, encode(key),
-                            max_burst.toString().getBytes(),
-                            count_per_period.toString().getBytes(),
-                            period.toString().getBytes());
+                            encode(max_burst),
+                            encode(count_per_period),
+                            encode(period));
             result = conn.getClient().getIntegerMultiBulkReply();
         }
         return result;
@@ -52,6 +49,16 @@ public class JReCell {
                 throw new JedisDataException("value sent to redis cannot be null");
             }
             return str.getBytes(Protocol.CHARSET);
+        } catch (UnsupportedEncodingException e) {
+            throw new JedisException(e);
+        }
+    }
+    public static byte[] encode(Integer num) {
+        try {
+            if (num == null) {
+                throw new JedisDataException("value sent to redis cannot be null");
+            }
+            return num.toString().getBytes(Protocol.CHARSET);
         } catch (UnsupportedEncodingException e) {
             throw new JedisException(e);
         }

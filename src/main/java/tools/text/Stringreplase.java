@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Stringreplase {
     public static void main(String[] args) {
@@ -29,9 +31,15 @@ public class Stringreplase {
 
     @Test
     public void tolow() {
-        String o = "JSON.ARRAPPEND";
-        System.out.println(o.toLowerCase());
-
+        final String ruleRegex = "\"(\\S+?)\"";
+        Pattern pattern = Pattern.compile(ruleRegex);
+        String expression = "+rule_ALL:(\"青岛昌阳投资开发有限公司\"\"昌阳投资\")";
+        Matcher matcher = pattern.matcher(expression);
+        List<String> keywords = new ArrayList<>();
+        while (matcher.find()) {
+            keywords.add(matcher.group(1));
+        }
+        System.out.println(keywords);
     }
 
     @Test
@@ -76,12 +84,12 @@ public class Stringreplase {
 
     @Test
     public void ip2() {
-        String a="南京秦淮区$大经路";
+        String a = "南京秦淮区$大经路";
         String[] split = a.split("\\$");
         System.out.println(split.length);
-        Arrays.stream(split).forEach((x)-> System.out.println(x+"\t"));
+        Arrays.stream(split).forEach((x) -> System.out.println(x + "\t"));
 
-       // System.out.println(getLocalIPList());
+        // System.out.println(getLocalIPList());
     }
 
     public static List<String> getLocalIPList() {
