@@ -10,81 +10,14 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>database-redis</module>
+        <module>others</module>
     </modules>
     <properties>
+        <!--jdk的版本设置-->
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <log4j.version>2.5</log4j.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-client</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-common</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-        <!--引入neo4j-->
-        <!-- https://mvnrepository.com/artifact/org.neo4j/neo4j -->
-        <dependency>
-            <groupId>org.neo4j</groupId>
-            <artifactId>neo4j</artifactId>
-            <version>3.5.11</version>
-        </dependency>
-        <!--引入neo4j驱动-->
-        <dependency>
-            <groupId>org.neo4j.driver</groupId>
-            <artifactId>neo4j-java-driver</artifactId>
-            <version>1.7.5</version>
-        </dependency>
-
-        <!--引入mysql-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.17</version>
-        </dependency>
-
-        <!--引入junit-->
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!--引入fastjson-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.31</version>
-        </dependency>
-
-        <!--引入redis的java客户端-->
-        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>3.2.0</version>
-        </dependency>
-
-        <!--引入布隆过滤器java客户端依赖于redis.clients.jedis3.0.0-->
-        <!-- https://mvnrepository.com/artifact/com.redislabs/jrebloom -->
-        <dependency>
-            <groupId>com.redislabs</groupId>
-            <artifactId>jrebloom</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-        <!--引入Json java客户端依赖于redis.clients.jedis3.0.0-->
-        <dependency>
-            <groupId>com.redislabs</groupId>
-            <artifactId>jrejson</artifactId>
-            <version>1.2.0</version>
-        </dependency>
 
         <!--引入lombok-->
         <dependency>
@@ -93,98 +26,21 @@
             <version>1.16.22</version>
         </dependency>
 
-
-        <!--引入log4j-->
+        <!--引入日志-->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-nop</artifactId>
-            <version>1.7.2</version>
-        </dependency>
-        <!--引入hanlp汉语言处理-->
-        <!--  <dependency>
-              <groupId>com.hankcs</groupId>
-              <artifactId>hanlp</artifactId>
-              <version>portable-1.7.5</version>
-          </dependency>-->
-        <dependency>
-            <groupId>com.hankcs</groupId>
-            <artifactId>hanlp</artifactId>
-            <version>portable-1.6.8</version>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.25</version>
         </dependency>
 
-        <!--kafka客户端-->
-        <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>2.3.0</version>
-        </dependency>
-
-        <!--查看java对象大小-->
-        <dependency>
-            <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-core</artifactId>
-            <version>4.0.0</version>
-        </dependency>
-
-        <!--mysql连接池-->
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-dbcp2</artifactId>
-            <version>2.1.1</version>
-        </dependency>
-
-
-        <!--java远程调用linux shell-->
-        <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>0.1.54</version>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <mainClass>sort01.RunShell</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>assembly</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <!--jdk的版本设置-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -194,7 +50,6 @@
                     <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 </project>
