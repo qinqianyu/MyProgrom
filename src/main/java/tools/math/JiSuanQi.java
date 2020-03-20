@@ -30,10 +30,9 @@ public class JiSuanQi {
     }
     @Test
     public void jisuanqi4() {
-        long nextLong = ThreadLocalRandom.current().nextLong(2L << 32);
-        System.out.println(nextLong);
-        System.out.println(2L << 32);
-        System.out.println(Long.MAX_VALUE);
+        System.out.println(2 << 28);
+        System.out.println(500000000);
+        System.out.println(Integer.MAX_VALUE);
 
     }
 }

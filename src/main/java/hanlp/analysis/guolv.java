@@ -55,10 +55,11 @@ public class guolv {
     }
 
     public static void main(String[] args) {
-        Segment segment = HanLP.newSegment("perceptron").enableCustomDictionary(false);
+        Segment segmentper = HanLP.newSegment("perceptron").enableCustomDictionary(false);
+        Segment segmentcrf = HanLP.newSegment("crf").enableCustomDictionary(false);
         try (BufferedReader reader = new BufferedReader(new FileReader(infileName));
-             BufferedWriter writer1 = new BufferedWriter(new FileWriter("C:\\Users\\24109\\Desktop\\机构识别2\\perceptron_out.txt"));
-             BufferedWriter writer2 = new BufferedWriter(new FileWriter("C:\\Users\\24109\\Desktop\\机构识别2\\perceptron_drop.txt"));
+             BufferedWriter writer1 = new BufferedWriter(new FileWriter("C:\\Users\\24109\\Desktop\\机构识别2\\per_crf_out.txt"));
+             BufferedWriter writer2 = new BufferedWriter(new FileWriter("C:\\Users\\24109\\Desktop\\机构识别2\\per_crf_drop.txt"));
         ) {
             String tempString;
             int count = 0;
@@ -67,7 +68,7 @@ public class guolv {
                 if ((count & (int) (Math.pow(2, 17) - 1)) == 0)
                     System.out.println(count + "-->" + System.currentTimeMillis());
                 count++;
-                List<Term> termList = segment.seg(tempString);
+                List<Term> termList = segmentcrf.seg(tempString);
                 flag = true;
                 for (Term tmp : termList) {
                     if (tmp.nature.toString().equals("nt")) {
@@ -75,6 +76,17 @@ public class guolv {
                         writer1.newLine();
                         flag = false;
                         break;
+                    }
+                }
+                if (flag) {
+                     termList = segmentper.seg(tempString);
+                    for (Term tmp : termList) {
+                        if (tmp.nature.toString().equals("nt")) {
+                            writer1.write(tmp.word);
+                            writer1.newLine();
+                            flag = false;
+                            break;
+                        }
                     }
                 }
                 if (flag) {

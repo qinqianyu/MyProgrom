@@ -20,8 +20,5 @@ public class myTest {
     @Test
     public void testchar2() {
         System.out.println(String.valueOf((char)13000));
-
     }
-
-
 }

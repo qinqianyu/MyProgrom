@@ -7,10 +7,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Guolv {
-    private static final String infileName = "C:/Users/24109/Desktop/青岛/企业名单.txt";
-    private static final String outfile1 = "C:/Users/24109/Desktop/青岛/out_1.txt";
-    private static final String dropfile1 = "C:/Users/24109/Desktop/青岛/drop_1.txt";
-    private static final String dropfile2 = "C:/Users/24109/Desktop/青岛/drop_2.txt";
+    private static final String infileName = "C:\\Users\\24109\\AppData\\Roaming\\feiq\\Recv Files\\mkt_invopt.txt";
+    private static final String outfile1 = "C:/Users/24109/Desktop/情报/out_1.txt";
+    private static final String dropfile1 = "C:/Users/24109/Desktop/情报/drop_1.txt";
+    private static final String dropfile2 = "C:/Users/24109/Desktop/情报/drop_2.txt";
 
     public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new FileReader(infileName));

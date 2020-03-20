@@ -23,11 +23,11 @@ public class RedisJsonTest {
             timestr=new SimpleDateFormat("HH:mm:ss").format(new Date(timeMillis));
             //jsonClient.set();
         }
-       // long timeMillis = System.currentTimeMillis();
-       // CpuCut build = CpuCut.builder().time(new SimpleDateFormat("HH:mm:ss").format(new Date(timeMillis))).value(25).build();
-       // String jsonString = JSON.toJSONString(build);
-       // jsonClient.set(mykey, build);
-       // System.out.println(jsonString);
+         timeMillis = System.currentTimeMillis();
+        CpuCut build = CpuCut.builder().time(new String[]{new SimpleDateFormat("HH:mm:ss").format(new Date(timeMillis))}).value(new Integer[]{25}).build();
+        String jsonString = JSON.toJSONString(build);
+        jsonClient.set(mykey, build);
+        System.out.println(jsonString);
         String s = jsonClient.get(mykey, String.class, new Path(".time"));
         Integer v = jsonClient.get(mykey, Integer.class, new Path(".value"));
         System.out.println(s);

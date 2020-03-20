@@ -20,7 +20,7 @@ public class RedisPoolUtil4J {
     private static final long maxWaitMillis = 10000;//申请资源最大等待时间,过期报错
     private static final String redisPassword = null;//密码
     //在borrow(引入)一个jedis实例时，是否提前进行validate操作；如果为true，则得到的jedis实例均是可用的,配置true会降低性能,配置false长期使用写入会不稳定.
-    private static final boolean TestOnBorrow = true;
+    private static final boolean TestOnBorrow = false;
     private static final boolean TestOnReturn = false;//在向对象池中归还对象时是否检测对象有效(true : 是) , 配置true会降低性能；
     private static final boolean TestOnCreate = false;//在创建对象时检测对象是否有效(true : 是) , 配置true会降低性能;
 
@@ -35,7 +35,7 @@ public class RedisPoolUtil4J {
         config.setTestOnBorrow(TestOnBorrow);
         config.setTestOnReturn(TestOnReturn);
         config.setTestOnCreate(TestOnCreate);
-        pool = new JedisPool(config, redisHost, redisPort, redisTimeout, redisPassword);
+        pool = new JedisPool(config, redisHost, redisPort, redisTimeout, redisPassword,1);
     }
 
     //获取redis连接

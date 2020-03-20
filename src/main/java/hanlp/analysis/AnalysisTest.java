@@ -44,7 +44,7 @@ public class AnalysisTest {
         fun3();
         fun4();
         fun5();
-        fun6();
+        //fun6();
         fun7();
         fun8();
         fun9();
@@ -114,7 +114,7 @@ public class AnalysisTest {
                     count++;
                 // System.out.println(termList);
             }
-            System.out.println("count:" + count + ",耗时:" + (System.currentTimeMillis() - start) + "-->crf--禁词典--识别企");
+            System.out.println("count:" + count + ",耗时:" + (System.currentTimeMillis() - start) + "-->crf--开词典--识别企");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -126,7 +126,7 @@ public class AnalysisTest {
              BufferedWriter writer1 = new BufferedWriter(new FileWriter(outfile1))
         ) {
             String tempString;
-            Segment segment = HanLP.newSegment("crf").enableCustomDictionary(false);
+            Segment segment = HanLP.newSegment("crf");
 
             int line = 0, count = 0;
             long start = System.currentTimeMillis();
