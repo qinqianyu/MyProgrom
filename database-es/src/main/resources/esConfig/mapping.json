@@ -1,0 +1,22 @@
+{
+  "ct3": {
+    "properties": {
+      "id": {
+        "type": "long"
+      },
+      "name": {
+        "type": "text"
+      },
+      "age": {
+        "type": "long"
+      },
+      "query": {
+        "properties": {
+          "match_all": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

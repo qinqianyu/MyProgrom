@@ -4,7 +4,6 @@ import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.model.perceptron.PerceptronSegmenter;
 import com.hankcs.hanlp.seg.Segment;
 import com.hankcs.hanlp.seg.common.Term;
-import database.mysql.pool.MysqlPoolUtil;
 import org.junit.Test;
 
 import java.io.*;
@@ -206,25 +205,7 @@ public class guolv {
         return true;
     }
 
-    @Test
-    public void getend() throws IOException {
-        PerceptronSegmenter perceptronSegmenter = new PerceptronSegmenter(fileRoot + "data/model/perceptron/large/cws.bin");
-        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\24109\\Desktop\\机构识别\\kafka疑似\\疑似实体out1.txt"));
-             Connection connection = MysqlPoolUtil.getConnection();
-        ) {
-            PreparedStatement preparedStatement;
-            String tempString;
-            while ((tempString = reader.readLine()) != null) {
-                //if ((count & (int)(Math.pow(2,17)-1) )== 0) System.out.println(count+"-->"+System.currentTimeMillis());
-                List<String> stringList = perceptronSegmenter.segment(tempString);
-                 preparedStatement = connection.prepareStatement("INSERT INTO marketplayerEndWord ( word, count ) VALUES ( ?, 1 ) ON DUPLICATE KEY UPDATE count = count +1");
-                preparedStatement.setString(1,stringList.get(stringList.size()-1));
-                preparedStatement.execute();
-            }
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
 
 
 }

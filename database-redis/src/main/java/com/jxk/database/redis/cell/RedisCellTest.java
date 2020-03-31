@@ -8,6 +8,9 @@ import redis.clients.jedis.Jedis;
 
 import java.util.List;
 
+/**
+ * 用于测试漏斗模型限流
+ */
 public class RedisCellTest {
     /**
      * 原生方法

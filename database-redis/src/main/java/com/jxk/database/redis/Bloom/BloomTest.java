@@ -4,11 +4,12 @@ package com.jxk.database.redis.Bloom;
 import com.jxk.database.redis.pool.RedisPoolUtil4J;
 import io.rebloom.client.Client;
 import org.junit.Test;
-import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static com.jxk.database.redis.keys.redisKeys.bloomKey;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,18 +21,16 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class BloomTest {
 
-    private static final String KEY = "codehole";
-
     /**
      * 布隆过滤器对于已经见过的元素肯定不会误判，它只会误判那些没见过的元素
      */
     @Test
     public void test1() {
         Client client = RedisPoolUtil4J.getBloomClient();
-        client.delete(KEY);
+        client.delete(bloomKey);
         for (int i = 0; i < 100000; i++) {
-            client.add(KEY, "user" + i);
-            boolean exists = client.exists(KEY, "user" + i);
+            client.add(bloomKey, "user" + i);
+            boolean exists = client.exists(bloomKey, "user" + i);
             if (!exists) {
                 System.out.println(i + "不存在");
                 break;
@@ -39,35 +38,6 @@ public class BloomTest {
         }
     }
 
-    /**
-     * 布隆过滤器删除
-     */
-    @Test
-    public void delet() {
-        Client client = RedisPoolUtil4J.getBloomClient();
-        Jedis connection = RedisPoolUtil4J.getConnection();
-        boolean largebloom = client.delete("largebloom");
-        if (largebloom) {
-            System.out.println("删除 largebloom 成功");
-        }
-        boolean key = client.delete(KEY);
-        if (key) {
-            System.out.println("删除 key 成功");
-        }
-        boolean newFilter = client.delete("newFilter");
-        if (newFilter) {
-            System.out.println("删除 newFilter 成功");
-        }
-        boolean simpleBloom = client.delete("simpleBloom");
-        if (simpleBloom) {
-            System.out.println("删除 simpleBloom 成功");
-        }
-
-        Long uniqueID_ = connection.del("UniqueID");
-        if (uniqueID_ == 1) {
-            System.out.println("删除 UniqueID 成功");
-        }
-    }
 
     /**
      * 输出了214，也就是到第214个元素的时候，它出现了误判
@@ -75,11 +45,11 @@ public class BloomTest {
     @Test
     public void test2() {
         Client client = RedisPoolUtil4J.getBloomClient();
-        client.delete(KEY);
+        client.delete(bloomKey);
         for (int i = 0; i < 100000; i++) {
-            client.add(KEY, "user" + i);
+            client.add(bloomKey, "user" + i);
             //注意 i+1，这个是当前布隆过滤器没见过的
-            boolean exists = client.exists(KEY, "user" + (i + 1));
+            boolean exists = client.exists(bloomKey, "user" + (i + 1));
             if (exists) {
                 System.out.println(i);
                 break;
@@ -126,11 +96,11 @@ public class BloomTest {
         List<String> usersTrain = users.subList(0, users.size() / 2);
         List<String> userTest = users.subList(users.size() / 2, users.size());
         Client client = RedisPoolUtil4J.getBloomClient();
-        client.delete(KEY);
-        usersTrain.forEach(s -> client.add(KEY, s));
+        client.delete(bloomKey);
+        usersTrain.forEach(s -> client.add(bloomKey, s));
         int falses = 0;
         for (String s : userTest) {
-            boolean exists = client.exists(KEY, s);
+            boolean exists = client.exists(bloomKey, s);
             if (exists) {
                 falses++;
             }
@@ -153,13 +123,13 @@ public class BloomTest {
         List<String> usersTrain = users.subList(0, users.size() / 2);
         List<String> userTest = users.subList(users.size() / 2, users.size());
         Client client = RedisPoolUtil4J.getBloomClient();
-        client.delete(KEY);
+        client.delete(bloomKey);
         //对应bf.reserve指令
-        client.createFilter(KEY, users.size() / 2, 0.001);
-        usersTrain.forEach(s -> client.add(KEY, s));
+        client.createFilter(bloomKey, users.size() / 2, 0.001);
+        usersTrain.forEach(s -> client.add(bloomKey, s));
         int falses = 0;
         for (String s : userTest) {
-            boolean exists = client.exists(KEY, s);
+            boolean exists = client.exists(bloomKey, s);
             if (exists) {
                 falses++;
             }

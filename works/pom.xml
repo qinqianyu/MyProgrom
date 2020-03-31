@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>My-Leaning</artifactId>
+        <groupId>com.jxk</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>works</artifactId>
+    <dependencies>
+
+        <!--引入redis的java客户端-->
+        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+        <!--引入布隆过滤器java客户端依赖于redis.clients.jedis3.0.0-->
+        <!-- https://mvnrepository.com/artifact/com.redislabs/jrebloom -->
+        <dependency>
+            <groupId>com.redislabs</groupId>
+            <artifactId>jrebloom</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+
+        <!--引入Json java客户端依赖于redis.clients.jedis3.0.0-->
+        <dependency>
+            <groupId>com.redislabs</groupId>
+            <artifactId>jrejson</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+
+        <!--引入hanlp汉语言处理-->
+          <dependency>
+              <groupId>com.hankcs</groupId>
+              <artifactId>hanlp</artifactId>
+              <version>portable-1.7.5</version>
+          </dependency>
+     <!--   <dependency>
+            <groupId>com.hankcs</groupId>
+            <artifactId>hanlp</artifactId>
+            <version>portable-1.6.8</version>
+        </dependency>-->
+
+        <!--引入mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.17</version>
+        </dependency>
+        <!--mysql连接池-->
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+
+    </dependencies>
+</project>

@@ -7,7 +7,7 @@ object RedisPoolUtil extends Serializable {
   @transient private var pool: JedisPool = _
 
   /**
-    * 读取jedis配置信息, 出发jedis初始化
+    * 读取jedis配置信息, 触发jedis初始化
     * 可以写配置类
     */
   def initJedi(): Unit = {

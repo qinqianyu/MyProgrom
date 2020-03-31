@@ -3,6 +3,8 @@ package com.jxk.database.redis.Bloom;
 
 import io.rebloom.client.Client;
 
+import java.util.Arrays;
+
 public class RedisBloomDemo {
     public static void main(String[] args) {
         String userIdBloomKey = "userid";
@@ -16,15 +18,15 @@ public class RedisBloomDemo {
 
         // 批量新增values
         boolean[] booleans = client.addMulti(userIdBloomKey, "101310111", "101310222", "101310222");
-        System.out.println("add multi result " + booleans);
+        System.out.println("add multi result " + Arrays.toString(booleans));
 
         // 某个value是否存在
         boolean exists = client.exists(userIdBloomKey, "101310111");
         System.out.println("101310111 是否存在" + exists);
 
         //某批value是否存在
-        boolean existsBoolean[] = client.existsMulti(userIdBloomKey, "101310111", "101310222", "101310222", "11111111");
-        System.out.println("某批value是否存在 " + existsBoolean);
+        boolean[] existsBoolean = client.existsMulti(userIdBloomKey, "101310111", "101310222", "101310222", "11111111");
+        System.out.println("某批value是否存在 " + Arrays.toString(existsBoolean));
 
         client.close();
     }

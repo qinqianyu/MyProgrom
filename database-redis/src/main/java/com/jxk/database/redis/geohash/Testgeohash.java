@@ -9,6 +9,11 @@ import redis.clients.jedis.Jedis;
 import java.util.List;
 import java.util.Random;
 
+import static com.jxk.database.redis.keys.redisKeys.geoHashKey;
+
+/**
+ * 测试geohash；
+ */
 public class Testgeohash {
     private static final double EARTH_RADIUS = 6378137;// 赤道半径(单位m)
 
@@ -22,7 +27,7 @@ public class Testgeohash {
     @Test
     public void mytest() {
         Jedis jedis = RedisPoolUtil4J.getConnection();
-        String mykey = "mykey";
+        String mykey = geoHashKey;
         double log = 116.48115;
         double lat = 39.996744;
         double count = 0;

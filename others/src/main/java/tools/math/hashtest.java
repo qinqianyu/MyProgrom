@@ -1,7 +1,7 @@
 package tools.math;
 
-import scala.Int;
-import scala.util.Random;
+
+import java.util.Random;
 
 public class hashtest {
     public static void main(String[] args) {

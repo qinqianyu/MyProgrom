@@ -11,6 +11,9 @@
     <modules>
         <module>database-redis</module>
         <module>others</module>
+        <module>works</module>
+        <module>text</module>
+        <module>database-es</module>
     </modules>
     <properties>
         <!--jdk的版本设置-->
@@ -38,7 +41,25 @@
             <version>1.7.25</version>
         </dependency>
 
+        <!--  &lt;!&ndash;引入junit&ndash;&gt;
+          &lt;!&ndash; https://mvnrepository.com/artifact/junit/junit &ndash;&gt;
+          <dependency>
+              <groupId>junit</groupId>
+              <artifactId>junit</artifactId>
+              <version>4.12</version>
+              <scope>compile</scope>
+          </dependency>-->
     </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <plugins>
             <!--jdk的版本设置-->

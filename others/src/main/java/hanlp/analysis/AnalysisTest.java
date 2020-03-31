@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-import static org.apache.logging.log4j.core.util.Loader.getClassLoader;
+
 
 public class AnalysisTest {
     private static String fileRoot;
