@@ -15,6 +15,7 @@
         <module>text</module>
         <module>database-es</module>
         <module>database-jpa</module>
+        <module>java-base</module>
     </modules>
     <properties>
         <!--jdk的版本设置-->
