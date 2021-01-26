@@ -1,11 +1,6 @@
-##----------idea----------
-
+.idea
+target
 *.iml
-
-.idea/
-
-*.ipr
-
-*.iws
-
-target/
+*.class
+*.jar
+*.pyc

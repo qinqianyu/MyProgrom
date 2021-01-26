@@ -16,6 +16,7 @@
         <module>database-es</module>
         <module>database-jpa</module>
         <module>java-base</module>
+        <module>spring-boot-base</module>
     </modules>
     <properties>
         <!--jdk的版本设置-->
@@ -23,34 +24,12 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
     <dependencies>
-
         <!--引入lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.22</version>
         </dependency>
-
-        <!--引入日志-->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
-        </dependency>
-
-        <!--  &lt;!&ndash;引入junit&ndash;&gt;
-          &lt;!&ndash; https://mvnrepository.com/artifact/junit/junit &ndash;&gt;
-          <dependency>
-              <groupId>junit</groupId>
-              <artifactId>junit</artifactId>
-              <version>4.13.1</version>
-              <scope>compile</scope>
-          </dependency>-->
     </dependencies>
     <dependencyManagement>
         <dependencies>
